@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_journey/jwidgets/AlignTransitionWidget.dart';
 import 'package:flutter_journey/jwidgets/AnimatedBuilderWidget.dart';
 import 'package:flutter_journey/jwidgets/AnimatedContainerWidget.dart';
+import 'package:flutter_journey/jwidgets/AnimatedCrossFadeWidget.dart';
 
 void main() {
   runApp(const MyApp());
@@ -71,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Center(child: AnimatedBuilderWidget()),
+      body: Center(child: AnimatedCrossFadeWidget()),
     );
   }
 }
