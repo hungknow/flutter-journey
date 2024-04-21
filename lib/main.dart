@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_journey/jwidgets/AlignTransitionWidget.dart';
 import 'package:flutter_journey/jwidgets/actions.dart';
 
 void main() {
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
-        colorScheme: ColorScheme.dark(),
+        colorScheme: const ColorScheme.dark(),
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -69,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Center(child: ActionsWidget()),
+      body: Center(child: AlignTransitionWidget()),
     );
   }
 }
