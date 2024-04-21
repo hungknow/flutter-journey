@@ -1,4 +1,5 @@
 // https://api.flutter.dev/flutter/widgets/AlignTransition-class.html
+// https://api.flutter.dev/flutter/widgets/AnimatedAlign-class.html
 
 import 'package:flutter/material.dart';
 
@@ -23,6 +24,8 @@ class _AlignTransitionWidgetState extends State<AlignTransitionWidget>
     ),
   );
 
+  bool selected = false;
+
   @override
   void dispose() {
     _controller.dispose();
@@ -31,13 +34,30 @@ class _AlignTransitionWidgetState extends State<AlignTransitionWidget>
 
   @override
   Widget build(BuildContext context) {
-    return ColoredBox(
-        color: Colors.white,
-        child: AlignTransition(
-            alignment: _animation,
-            child: const Padding(
-              padding: EdgeInsets.all(8),
-              child: FlutterLogo(size: 150.0),
-            )));
+    return Stack(children: [
+      // Use AlignTransaction
+      // ColoredBox(
+      //     color: Colors.white,
+      AlignTransition(
+          alignment: _animation,
+          child: const Padding(
+            padding: EdgeInsets.all(8),
+            child: FlutterLogo(size: 150.0),
+          )),
+      // Use AnimatedAlign
+      GestureDetector(
+        onTap: () {
+          setState(() {
+            selected = !selected;
+          });
+        },
+        child: AnimatedAlign(
+          alignment: selected ? Alignment.center : Alignment.topRight,
+          duration: const Duration(seconds: 2),
+          curve: Curves.fastOutSlowIn,
+          child: const FlutterLogo(size: 150.0),
+        ),
+      )
+    ]);
   }
 }
