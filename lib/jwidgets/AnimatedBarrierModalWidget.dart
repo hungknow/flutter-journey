@@ -29,11 +29,17 @@ class _AnimatedBarrierModalWidgetState extends State<AnimatedBarrierModalWidget>
       vsync: this,
     );
 
-    ColorTween _colorTween = ColorTween(
+    ColorTween colorTween = ColorTween(
       begin: Colors.orangeAccent.withOpacity(0.5),
       end: Colors.blueGrey.withOpacity(0.5),
     );
-    _colorAnimation = _colorTween.animate(_animationController);
+    _colorAnimation = colorTween.animate(_animationController);
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
   }
 
   @override
