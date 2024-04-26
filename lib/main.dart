@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_journey/jwidgets/AlignTransitionWidget.dart';
+import 'package:flutter_journey/jwidgets/AllWidgets.dart';
 import 'package:flutter_journey/jwidgets/AnimatedBarrierModalWidget.dart';
 import 'package:flutter_journey/jwidgets/AnimatedBuilderWidget.dart';
 import 'package:flutter_journey/jwidgets/AnimatedContainerWidget.dart';
@@ -70,7 +71,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return MaterialApp(
+        home: Scaffold(
       appBar: AppBar(
         // TRY THIS: Try changing the color here to a specific color (to
         // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
@@ -80,7 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Center(child: BackdropFilterWidget()),
-    );
+      body: AllWidgets(),
+    ));
   }
 }
