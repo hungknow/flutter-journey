@@ -7,6 +7,8 @@ import 'package:flutter_journey/jwidgets/AnimatedCrossFadeWidget.dart';
 import 'package:flutter_journey/jwidgets/AnimatedGrid.dart';
 import 'package:flutter_journey/jwidgets/AnimatedListWidget.dart';
 import 'package:flutter_journey/jwidgets/AspectRatioWidget.dart';
+import 'package:flutter_journey/jwidgets/AutofillGroupWidget.dart';
+import 'package:flutter_journey/jwidgets/PageViewWidget.dart';
 import 'package:flutter_journey/jwidgets/RawAutocompleteWidget.dart';
 
 void main() {
@@ -77,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Center(child: RawAutoCompleteWidget()),
+      body: Center(child: PageViewWidget()),
     );
   }
 }
