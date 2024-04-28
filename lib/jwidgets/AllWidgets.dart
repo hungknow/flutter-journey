@@ -11,6 +11,7 @@ import 'package:flutter_journey/jwidgets/BackdropFilterWidget.dart';
 import 'package:flutter_journey/jwidgets/PageViewWidget.dart';
 import 'package:flutter_journey/jwidgets/RawAutoCompleteWidget.dart';
 import 'package:flutter_journey/jwidgets/ResponsiveUIWidget.dart';
+import 'package:flutter_journey/jwidgets/SmoothWidget.dart';
 
 class widgetRoute {
   final String title;
@@ -34,7 +35,8 @@ class AllWidgets extends StatelessWidget {
     widgetRoute('BackdropFilterWidget', () => BackdropFilterWidget()),
     widgetRoute('PageViewWidget', () => PageViewWidget()),
     widgetRoute('RawAutoCompleteWidget', () => RawAutoCompleteWidget()),
-    widgetRoute('ResponsiveUI', () => ResponsiveUIWidget())
+    widgetRoute('ResponsiveUI', () => ResponsiveUIWidget()),
+    widgetRoute('SmoothWidget', () => SmoothWidget())
   ];
 
   @override
