@@ -12,6 +12,7 @@ import 'package:flutter_journey/jwidgets/PageViewWidget.dart';
 import 'package:flutter_journey/jwidgets/RawAutoCompleteWidget.dart';
 import 'package:flutter_journey/jwidgets/ResponsiveUIWidget.dart';
 import 'package:flutter_journey/jwidgets/SmoothWidget.dart';
+import 'package:flutter_journey/jwidgets/YoutubeWidget.dart';
 
 class widgetRoute {
   final String title;
@@ -36,7 +37,8 @@ class AllWidgets extends StatelessWidget {
     widgetRoute('PageViewWidget', () => PageViewWidget()),
     widgetRoute('RawAutoCompleteWidget', () => RawAutoCompleteWidget()),
     widgetRoute('ResponsiveUI', () => ResponsiveUIWidget()),
-    widgetRoute('SmoothWidget', () => SmoothWidget())
+    widgetRoute('SmoothWidget', () => SmoothWidget()),
+    widgetRoute('YoutubeWidget', () => YoutubeWidget())
   ];
 
   @override
