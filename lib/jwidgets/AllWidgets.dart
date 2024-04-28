@@ -10,6 +10,7 @@ import 'package:flutter_journey/jwidgets/AutofillGroupWidget.dart';
 import 'package:flutter_journey/jwidgets/BackdropFilterWidget.dart';
 import 'package:flutter_journey/jwidgets/PageViewWidget.dart';
 import 'package:flutter_journey/jwidgets/RawAutoCompleteWidget.dart';
+import 'package:flutter_journey/jwidgets/ResponsiveUIWidget.dart';
 
 class widgetRoute {
   final String title;
@@ -32,7 +33,8 @@ class AllWidgets extends StatelessWidget {
     widgetRoute('AutofillGroupWidget', () => AutofillGroupWidget()),
     widgetRoute('BackdropFilterWidget', () => BackdropFilterWidget()),
     widgetRoute('PageViewWidget', () => PageViewWidget()),
-    widgetRoute('RawAutoCompleteWidget', () => RawAutoCompleteWidget())
+    widgetRoute('RawAutoCompleteWidget', () => RawAutoCompleteWidget()),
+    widgetRoute('ResponsiveUI', () => ResponsiveUIWidget())
   ];
 
   @override
