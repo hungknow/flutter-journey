@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_journey/go_router_test.dart';
 import 'package:flutter_journey/jwidgets/AllWidgets.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:go_router/go_router.dart';
@@ -10,7 +11,7 @@ void main() {
 
 // GoRouter configuration
 final _router = GoRouter(
-  routes: [
+  routes: <RouteBase>[
     GoRoute(
       path: '/',
       builder: (context, state) =>
@@ -33,6 +34,7 @@ final _router = GoRouter(
             ]),
       ],
     ),
+    ...PushWithShellRouteWidget.routes,
   ],
 );
 
@@ -102,13 +104,22 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: TextButton(
-          onPressed: () {
-            // AllWidgets()
-            context.go('/jwidgets');
-          },
-          child: const Text("JWidget"),
-        ),
+        child: Column(children: [
+          TextButton(
+            onPressed: () {
+              // AllWidgets()
+              context.go('/jwidgets');
+            },
+            child: const Text("JWidget"),
+          ),
+          TextButton(
+            onPressed: () {
+              // AllWidgets()
+              context.go('/go_router_test');
+            },
+            child: const Text("GoRouter Test"),
+          )
+        ]),
       ),
     ));
   }
