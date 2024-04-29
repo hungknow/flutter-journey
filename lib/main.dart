@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_journey/book_router.dart';
 import 'package:flutter_journey/go_router_test.dart';
 import 'package:flutter_journey/jwidgets/AllWidgets.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
@@ -33,6 +34,12 @@ final _router = GoRouter(
                   }),
             ]),
       ],
+    ),
+    GoRoute(
+      path: "/books",
+      builder: (context, state) {
+        return BookWidget();
+      },
     ),
     ...PushWithShellRouteWidget.routes,
   ],
@@ -114,10 +121,15 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           TextButton(
             onPressed: () {
-              // AllWidgets()
               context.go('/go_router_test');
             },
             child: const Text("GoRouter Test"),
+          ),
+          TextButton(
+            onPressed: () {
+              context.go('/books');
+            },
+            child: const Text("Books"),
           )
         ]),
       ),

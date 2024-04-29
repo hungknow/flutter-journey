@@ -10,7 +10,10 @@ class PushWithShellRouteWidget extends StatelessWidget {
     ShellRoute(
         builder: (context, state, child) {
           return Scaffold(
-            appBar: AppBar(title: const Text('go_router_1')),
+            appBar: AppBar(
+              title: const Text('go_router_1'),
+              backgroundColor: Colors.amber[300],
+            ),
             body: child,
           );
         },
@@ -32,7 +35,10 @@ class PushWithShellRouteWidget extends StatelessWidget {
     ShellRoute(
         builder: (context, state, child) {
           return Scaffold(
-            appBar: AppBar(title: const Text('go_router_2')),
+            appBar: AppBar(
+              title: const Text('go_router_2'),
+              backgroundColor: Colors.blue[100],
+            ),
             body: child,
           );
         },
@@ -49,11 +55,23 @@ class PushWithShellRouteWidget extends StatelessWidget {
     GoRoute(
       path: '/go_router_test_regular_route',
       builder: (BuildContext context, GoRouterState state) {
-        return const Scaffold(
-          body: Center(child: Text('regular route')),
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('go_router_test_regular_route'),
+            backgroundColor: Colors.cyan[300],
+          ),
+          body: Center(
+            child: TextButton(
+              onPressed: () {
+                GoRouter.of(context).push('/go_router_test_shell_2');
+              },
+              child: const Text(
+                  'Regular: push the different shell route /go_router_test_shell_2'),
+            ),
+          ),
         );
       },
-    ),
+    )
   ];
 
   @override
