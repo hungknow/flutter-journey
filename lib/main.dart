@@ -40,6 +40,14 @@ final _router = GoRouter(
       builder: (context, state) {
         return BookWidget();
       },
+      routes: [
+        GoRoute(
+          path: ':id',
+          builder: (context, state) {
+            return BookWidget();
+          },
+        ),
+      ],
     ),
     ...PushWithShellRouteWidget.routes,
   ],

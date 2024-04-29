@@ -1,3 +1,4 @@
+// https://medium.com/flutter/learning-flutters-new-navigation-and-routing-system-7c9068155ade
 // https://gist.github.com/johnpryan/5ce79aee5b5f83cfababa97c9cf0a204
 
 import 'package:flutter/material.dart';
@@ -57,6 +58,7 @@ class BookRouterDelegate extends RouterDelegate<BookRoutePath>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<BookRoutePath> {
   final GlobalKey<NavigatorState> navigatorKey;
   Book? _selectedBook;
+  bool show404 = false;
 
   List<Book> books = [
     Book('Stranger in a Strange Land', 'Robert A. Heinlein'),
@@ -67,9 +69,15 @@ class BookRouterDelegate extends RouterDelegate<BookRoutePath>
   BookRouterDelegate() : navigatorKey = GlobalKey<NavigatorState>();
 
   @override
-  BookRoutePath get currentConfiguration => _selectedBook == null
-      ? BookRoutePath.home()
-      : BookRoutePath.details(books.indexOf(_selectedBook!));
+  BookRoutePath get currentConfiguration {
+    if (show404) {
+      return BookRoutePath.unknown();
+    }
+
+    return _selectedBook == null
+        ? BookRoutePath.home()
+        : BookRoutePath.details(books.indexOf(_selectedBook!));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +92,10 @@ class BookRouterDelegate extends RouterDelegate<BookRoutePath>
               onTapped: _handleBookTapped,
             ),
           ),
-          if (_selectedBook != null) BookDetailsPage(book: _selectedBook!)
+          if (show404)
+            MaterialPage(key: ValueKey('UnknownPage'), child: UnknownScreen())
+          else if (_selectedBook != null)
+            BookDetailsPage(book: _selectedBook!)
         ],
         onPopPage: (route, result) {
           if (!route.didPop(result)) {
@@ -93,6 +104,7 @@ class BookRouterDelegate extends RouterDelegate<BookRoutePath>
 
           // Update the list of pages by setting _selectedBook to null
           _selectedBook = null;
+          show404 = false;
           notifyListeners();
 
           return true;
@@ -100,10 +112,25 @@ class BookRouterDelegate extends RouterDelegate<BookRoutePath>
   }
 
   @override
-  Future<void> setNewRoutePath(BookRoutePath configuration) async {
-    if (configuration.isDetailsPage) {
-      _selectedBook = books[configuration.id!];
+  Future<void> setNewRoutePath(BookRoutePath path) async {
+    if (path.isUnknown) {
+      _selectedBook = null;
+      show404 = true;
+      return;
     }
+
+    if (path.isDetailsPage) {
+      if (path.id! < 0 || path.id! > books.length - 1) {
+        show404 = true;
+        return;
+      }
+
+      _selectedBook = books[path.id!];
+    } else {
+      _selectedBook = null;
+    }
+
+    show404 = false;
   }
 
   void _handleBookTapped(Book book) {
@@ -114,9 +141,15 @@ class BookRouterDelegate extends RouterDelegate<BookRoutePath>
 
 class BookRoutePath {
   final int? id;
+  final bool isUnknown;
 
-  BookRoutePath.home() : id = null;
-  BookRoutePath.details(this.id);
+  BookRoutePath.home()
+      : id = null,
+        isUnknown = false;
+  BookRoutePath.details(this.id) : isUnknown = false;
+  BookRoutePath.unknown()
+      : id = null,
+        isUnknown = true;
 
   bool get isHomePage => id == null;
   bool get isDetailsPage => id != null;
@@ -186,10 +219,24 @@ class BookDetailsPage extends Page {
   }) : super(key: ValueKey(book));
 
   Route createRoute(BuildContext context) {
-    return MaterialPageRoute(
+    // return MaterialPageRoute(
+    //   settings: this,
+    //   builder: (BuildContext context) {
+    //     return BookDetailsScreen(book: book);
+    //   },
+    // );
+    return PageRouteBuilder(
       settings: this,
-      builder: (BuildContext context) {
-        return BookDetailsScreen(book: book);
+      pageBuilder: (context, animation, animation2) {
+        final tween = Tween(begin: Offset(0.0, 1.0), end: Offset.zero);
+        final curveTween = CurveTween(curve: Curves.easeInOut);
+        return SlideTransition(
+          position: animation.drive(curveTween).drive(tween),
+          child: BookDetailsScreen(
+            key: ValueKey(book),
+            book: book,
+          ),
+        );
       },
     );
   }
@@ -227,5 +274,17 @@ class NoAnimationTransitionDelegate extends TransitionDelegate<void> {
       results.add(exitingPageRoute);
     }
     return results;
+  }
+}
+
+class UnknownScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: Center(
+        child: Text('404!'),
+      ),
+    );
   }
 }
