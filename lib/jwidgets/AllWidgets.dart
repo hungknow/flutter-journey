@@ -13,6 +13,7 @@ import 'package:flutter_journey/jwidgets/RawAutoCompleteWidget.dart';
 import 'package:flutter_journey/jwidgets/ResponsiveUIWidget.dart';
 import 'package:flutter_journey/jwidgets/SmoothWidget.dart';
 import 'package:flutter_journey/jwidgets/YoutubeWidget.dart';
+import 'package:go_router/go_router.dart';
 
 class widgetRoute {
   final String title;
@@ -24,7 +25,7 @@ class widgetRoute {
 class AllWidgets extends StatelessWidget {
   AllWidgets({Key? key}) : super(key: key);
 
-  var widgetRoutes = [
+  static var widgetRoutes = [
     widgetRoute('AnimatedBarrierModal', () => AnimatedBarrierModalWidget()),
     widgetRoute('AnimatedBuilder', () => AnimatedBuilderWidget()),
     widgetRoute('AnimatedContainerWidget', () => AnimatedContainerWidget()),
@@ -54,13 +55,7 @@ class AllWidgets extends StatelessWidget {
             backgroundColor: Colors.green[200],
           ),
           onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    // Wrap the widget in Scafold to display the AppBar
-                    builder: (context) => Scaffold(
-                        appBar: AppBar(title: Text(widget.title)),
-                        body: widget.widgetFactory())));
+            context.go("/jwidgets/${widget.title}");
           },
           child: Text(widget.title),
         );

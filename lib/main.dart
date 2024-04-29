@@ -1,21 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_journey/jwidgets/AlignTransitionWidget.dart';
 import 'package:flutter_journey/jwidgets/AllWidgets.dart';
-import 'package:flutter_journey/jwidgets/AnimatedBarrierModalWidget.dart';
-import 'package:flutter_journey/jwidgets/AnimatedBuilderWidget.dart';
-import 'package:flutter_journey/jwidgets/AnimatedContainerWidget.dart';
-import 'package:flutter_journey/jwidgets/AnimatedCrossFadeWidget.dart';
-import 'package:flutter_journey/jwidgets/AnimatedGrid.dart';
-import 'package:flutter_journey/jwidgets/AnimatedListWidget.dart';
-import 'package:flutter_journey/jwidgets/AspectRatioWidget.dart';
-import 'package:flutter_journey/jwidgets/AutofillGroupWidget.dart';
-import 'package:flutter_journey/jwidgets/BackdropFilterWidget.dart';
-import 'package:flutter_journey/jwidgets/PageViewWidget.dart';
-import 'package:flutter_journey/jwidgets/RawAutocompleteWidget.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:go_router/go_router.dart';
 
 void main() {
+  usePathUrlStrategy();
   runApp(const MyApp());
 }
+
+// GoRouter configuration
+final _router = GoRouter(
+  routes: [
+    GoRoute(
+      path: '/',
+      builder: (context, state) =>
+          const MyHomePage(title: 'Flutter Demo Home Page'),
+      routes: <RouteBase>[
+        GoRoute(
+            path: 'jwidgets',
+            builder: (context, state) => AllWidgets(),
+            routes: [
+              GoRoute(
+                  path: ':widgetName',
+                  builder: (context, state) {
+                    final widgetName = state.pathParameters['widgetName'];
+                    final widget = AllWidgets.widgetRoutes
+                        .firstWhere((element) => element.title == widgetName);
+                    return Scaffold(
+                        appBar: AppBar(title: Text(widget.title)),
+                        body: widget.widgetFactory());
+                  }),
+            ]),
+      ],
+    ),
+  ],
+);
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -23,7 +42,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
@@ -45,7 +64,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         colorScheme: const ColorScheme.dark(),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      routerConfig: _router,
     );
   }
 }
@@ -82,7 +101,15 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: AllWidgets(),
+      body: Center(
+        child: TextButton(
+          onPressed: () {
+            // AllWidgets()
+            context.go('/jwidgets');
+          },
+          child: const Text("JWidget"),
+        ),
+      ),
     ));
   }
 }
